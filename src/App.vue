@@ -29,6 +29,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { KTX2Loader } from 'three/examples/jsm/loaders/KTX2Loader';
 import { TransformControls } from 'three/examples/jsm/controls/TransformControls';
+import Stats from 'three/examples/jsm/libs/stats.module.js'; // Убедитесь, что библиотека корректно импортирована
 
 export default defineComponent({
   setup() {
@@ -48,7 +49,9 @@ export default defineComponent({
     const ktx2Loader = new KTX2Loader().setTranscoderPath('/basis/');
     const loader = new GLTFLoader();
 
-    // Функция для загрузки текстур с логированием
+    const stats = new Stats();
+    stats.showPanel(0); // 0: fps, 1: ms, 2: mb, etc.
+
     const loadTexture = (path, format) => {
       console.log(`Loading texture: ${path} with format ${format}`);
       if (format === 'ktx2') {
@@ -68,7 +71,6 @@ export default defineComponent({
       }
     };
 
-    // Предзагрузка всех текстур
     const textures = {};
     const loadTextures = () => {
       ['metal', 'wood', 'leather', 'velours'].forEach(type => {
@@ -114,20 +116,24 @@ export default defineComponent({
       gridHelper.position.y = -1;
       scene.add(gridHelper);
 
-      const light = new THREE.DirectionalLight(0xff0000, 1.0);
+      const light = new THREE.DirectionalLight(0xffffff, 1.0);
       light.position.set(-5, 5, 5);
       scene.add(light);
 
       const hemisphereLight = new THREE.HemisphereLight(0xffffbb, 0x080820, 1);
       scene.add(hemisphereLight);
 
+      document.body.appendChild(stats.dom);
+
       ktx2Loader.detectSupport(renderer);
 
       loadTextures();
 
       function animate() {
+        stats.begin();
         requestAnimationFrame(animate);
         renderer.render(scene, camera.value);
+        stats.end();
       }
       animate();
 
@@ -181,6 +187,7 @@ export default defineComponent({
   }
 });
 </script>
+
 
 
   <style scoped>
