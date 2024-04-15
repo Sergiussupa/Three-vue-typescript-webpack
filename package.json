@@ -1,0 +1,29 @@
+{
+  "name": "vue2",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack serve --open --config webpack.config.js",
+    "build": "webpack --config webpack.config.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "three": "^0.163.0",
+    "vue": "^3.4.21",
+    "vue-loader": "^17.4.2"
+  },
+  "devDependencies": {
+    "@types/howler": "^2.2.11",
+    "css-loader": "^7.1.1",
+    "style-loader": "^4.0.0",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.4.5",
+    "vue-template-compiler": "^2.7.16",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.0.4"
+  }
+}
